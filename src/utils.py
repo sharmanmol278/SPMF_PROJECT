@@ -2,7 +2,7 @@ import argparse
 import numpy as np
 import networkx as nx
 from sklearn.linear_model import LogisticRegression
-from sklearn.utils.testing import ignore_warnings
+#from sklearn.utils.testing import ignore_warnings
 from sklearn.exceptions import ConvergenceWarning
 from sklearn.metrics import roc_auc_score, f1_score
 from sklearn.preprocessing import StandardScaler
@@ -16,19 +16,19 @@ def parameter_parser():
     parser = argparse.ArgumentParser(description="Run SLF.")
     parser.add_argument("--edgePath",
                         nargs="?",
-                        default="./input/WikiElec.txt",
+                        default="./input/highland_directed.txt",
                         help="Edge list in txt format.")
     parser.add_argument("--sourceRepPath",
                         nargs="?",
-                        default="./output/WikiElec_source",
+                        default="./output/highland_directed_source",
                         help="Source representation path.")
     parser.add_argument("--targetRepPath",
                         nargs="?",
-                        default="./output/WikiElec_target",
+                        default="./output/highland_directed_target",
                         help="Target representation path.")
     parser.add_argument("--dim",
                         type=int,
-                        default=32,
+                        default=4,
                         help="Dimension of the representation. Default is 32.")
     parser.add_argument("--k",
                         type=int,
@@ -95,7 +95,7 @@ def save_null_edge_list(file_path, edges):
             edge = list(map(str, edge))
             f.write('\t'.join(edge) + '\n')
 
-@ignore_warnings(category=ConvergenceWarning)
+
 def sign_prediction(out_emb, in_emb, train_edges, test_edges):
     """
     Evaluate the performance on the sign prediction task.
@@ -149,7 +149,7 @@ def sign_prediction(out_emb, in_emb, train_edges, test_edges):
     return auc_score, macro_f1_score
 
 
-@ignore_warnings(category=ConvergenceWarning)
+
 def link_prediction(out_emb, in_emb, train_edges, test_edges, train_edges_null, test_edges_null):
     """
     Evaluate the performance on the link prediction task.
